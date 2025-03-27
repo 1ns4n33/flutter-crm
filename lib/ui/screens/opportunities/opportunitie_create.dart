@@ -4,7 +4,7 @@ import 'package:bottle_crm/bloc/dashboard_bloc.dart';
 import 'package:bottle_crm/bloc/team_bloc.dart';
 import 'package:bottle_crm/bloc/user_bloc.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:bottle_crm/bloc/opportunity_bloc.dart';
@@ -232,7 +232,8 @@ class _CreateOpportunitiesState extends State<CreateOpportunities> {
                               height: 48.0,
                               margin: EdgeInsets.only(bottom: 5.0),
                               child: DropdownSearch<String?>(
-                                items: opportunityBloc.leadSourceObjforDropDown,
+                                items: (a, b) =>
+                                    opportunityBloc.leadSourceObjforDropDown,
                                 onChanged: print,
                                 onSaved: (selection) {
                                   if (selection == null) {
@@ -246,7 +247,7 @@ class _CreateOpportunitiesState extends State<CreateOpportunities> {
                                 selectedItem: opportunityBloc
                                     .currentEditOpportunity['lead_source'],
                                 popupProps: PopupProps.bottomSheet(
-                                  itemBuilder: (context, item, isSelected) {
+                                  itemBuilder: (context, item, isSelected, _) {
                                     return Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 15.0, vertical: 10.0),
@@ -286,7 +287,8 @@ class _CreateOpportunitiesState extends State<CreateOpportunities> {
                               height: 48.0,
                               margin: EdgeInsets.only(bottom: 5.0),
                               child: DropdownSearch<String?>(
-                                items: opportunityBloc.accountsObjforDropDown,
+                                items: (a, b) =>
+                                    opportunityBloc.accountsObjforDropDown,
                                 onChanged: print,
                                 onSaved: (selection) {
                                   if (selection == null) {
@@ -301,7 +303,7 @@ class _CreateOpportunitiesState extends State<CreateOpportunities> {
                                 selectedItem: opportunityBloc
                                     .currentEditOpportunity['account'],
                                 popupProps: PopupProps.bottomSheet(
-                                  itemBuilder: (context, item, isSelected) {
+                                  itemBuilder: (context, item, isSelected, _) {
                                     return Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 15.0, vertical: 10.0),
@@ -465,7 +467,8 @@ class _CreateOpportunitiesState extends State<CreateOpportunities> {
                               height: 48.0,
                               margin: EdgeInsets.only(bottom: 5.0),
                               child: DropdownSearch<String?>(
-                                items: opportunityBloc.currencyObjforDropDown,
+                                items: (a, b) =>
+                                    opportunityBloc.currencyObjforDropDown,
                                 onChanged: print,
                                 onSaved: (selection) {
                                   if (selection == null) {
@@ -479,7 +482,7 @@ class _CreateOpportunitiesState extends State<CreateOpportunities> {
                                 selectedItem: opportunityBloc
                                     .currentEditOpportunity['currency'],
                                 popupProps: PopupProps.bottomSheet(
-                                  itemBuilder: (context, item, isSelected) {
+                                  itemBuilder: (context, item, isSelected, _) {
                                     return Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 15.0, vertical: 10.0),
@@ -524,7 +527,8 @@ class _CreateOpportunitiesState extends State<CreateOpportunities> {
                               height: 48.0,
                               margin: EdgeInsets.only(bottom: 5.0),
                               child: DropdownSearch<String?>(
-                                items: opportunityBloc.stageObjforDropDown,
+                                items: (a, b) =>
+                                    opportunityBloc.stageObjforDropDown,
                                 onChanged: print,
                                 onSaved: (selection) {
                                   if (selection == null) {
@@ -539,7 +543,7 @@ class _CreateOpportunitiesState extends State<CreateOpportunities> {
                                 selectedItem: opportunityBloc
                                     .currentEditOpportunity['stage'],
                                 popupProps: PopupProps.bottomSheet(
-                                  itemBuilder: (context, item, isSelected) {
+                                  itemBuilder: (context, item, isSelected, _) {
                                     return Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 15.0, vertical: 10.0),
@@ -761,32 +765,34 @@ class _CreateOpportunitiesState extends State<CreateOpportunities> {
         ),
         child: Column(
           children: [
-            quill.QuillToolbar.basic(
+            quill.QuillSimpleToolbar(
               controller: _controller,
-              showAlignmentButtons: true,
-              showBackgroundColorButton: false,
-              showCameraButton: false,
-              showImageButton: false,
-              showVideoButton: false,
-              showDividers: false,
-              showColorButton: false,
-              showUndo: false,
-              showRedo: false,
-              showQuote: false,
-              showClearFormat: false,
-              showIndent: false,
-              showLink: false,
-              showCodeBlock: false,
-              showInlineCode: false,
-              showListCheck: false,
-              showJustifyAlignment: false,
-              showHeaderStyle: false,
+              // showAlignmentButtons: true,
+              // showBackgroundColorButton: false,
+              // showCameraButton: false,
+              // showImageButton: false,
+              // showVideoButton: false,
+              // showDividers: false,
+              // showColorButton: false,
+              // showUndo: false,
+              // showRedo: false,
+              // showQuote: false,
+              // showClearFormat: false,
+              // showIndent: false,
+              // showLink: false,
+              // showCodeBlock: false,
+              // showInlineCode: false,
+              // showListCheck: false,
+              // showJustifyAlignment: false,
+              // showHeaderStyle: false,
             ),
             Expanded(
               child: Container(
                 child: quill.QuillEditor.basic(
-                    controller: _controller,
-                    readOnly: !_isLoading ? false : true),
+                  controller: _controller,
+                  config: quill.QuillEditorConfig(
+                      checkBoxReadOnly: !_isLoading ? false : true),
+                ),
               ),
             )
           ],
@@ -1013,7 +1019,6 @@ class _CreateOpportunitiesState extends State<CreateOpportunities> {
         opportunityBloc.offset = "";
         await opportunityBloc.fetchOpportunities();
         opportunityBloc.opportunities;
-        await FirebaseAnalytics.instance.logEvent(name: "Opportunity_Created");
         Navigator.pushReplacementNamed(context, '/opportunities_list');
       } else if (_result['error'] == true) {
         setState(() {

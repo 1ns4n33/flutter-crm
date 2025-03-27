@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:bottle_crm/bloc/user_bloc.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:file_picker/file_picker.dart';
@@ -334,7 +334,7 @@ class _CreateLeadState extends State<CreateLead> {
                                 height: screenHeight / 17,
                                 margin: EdgeInsets.only(bottom: 5.0),
                                 child: DropdownSearch<String?>(
-                                  items: leadBloc.status,
+                                  items: (a, b) => leadBloc.status,
                                   onChanged: print,
                                   onSaved: (selection) {
                                     if (selection == null) {
@@ -347,7 +347,8 @@ class _CreateLeadState extends State<CreateLead> {
                                   selectedItem:
                                       leadBloc.currentEditLead['status'],
                                   popupProps: PopupProps.bottomSheet(
-                                    itemBuilder: (context, item, isSelected) {
+                                    itemBuilder:
+                                        (context, item, isSelected, _) {
                                       return Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 15.0, vertical: 10.0),
@@ -392,7 +393,7 @@ class _CreateLeadState extends State<CreateLead> {
                                   height: screenHeight / 17,
                                   child: Stack(children: [
                                     DropdownSearch<String?>(
-                                      items: leadBloc.source,
+                                      items: (a, b) => leadBloc.source,
                                       onChanged: print,
                                       onSaved: (selection) {
                                         if (selection == null) {
@@ -407,7 +408,7 @@ class _CreateLeadState extends State<CreateLead> {
                                           leadBloc.currentEditLead['source'],
                                       popupProps: PopupProps.bottomSheet(
                                         itemBuilder:
-                                            (context, item, isSelected) {
+                                            (context, item, isSelected, _) {
                                           return Container(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 15.0,
@@ -565,7 +566,7 @@ class _CreateLeadState extends State<CreateLead> {
                                   height: screenHeight / 17,
                                   child: Stack(children: [
                                     DropdownSearch<String?>(
-                                      items: leadBloc.industry,
+                                      items: (a, b) => leadBloc.industry,
                                       onChanged: print,
                                       onSaved: (selection) {
                                         if (selection == null) {
@@ -580,7 +581,7 @@ class _CreateLeadState extends State<CreateLead> {
                                           leadBloc.currentEditLead['industry'],
                                       popupProps: PopupProps.bottomSheet(
                                         itemBuilder:
-                                            (context, item, isSelected) {
+                                            (context, item, isSelected, _) {
                                           return Container(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 15.0,
@@ -1235,7 +1236,7 @@ class _CreateLeadState extends State<CreateLead> {
                               height: screenHeight / 17,
                               child: Stack(children: [
                                 DropdownSearch<String?>(
-                                  items: leadBloc.countries,
+                                  items: (a, b) => leadBloc.countries,
                                   onChanged: print,
                                   onSaved: (selection) {
                                     if (selection == null) {
@@ -1248,7 +1249,8 @@ class _CreateLeadState extends State<CreateLead> {
                                   selectedItem:
                                       leadBloc.currentEditLead['country'],
                                   popupProps: PopupProps.bottomSheet(
-                                    itemBuilder: (context, item, isSelected) {
+                                    itemBuilder:
+                                        (context, item, isSelected, _) {
                                       return Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 15.0, vertical: 10.0),
@@ -1286,49 +1288,49 @@ class _CreateLeadState extends State<CreateLead> {
         });
       },
       child: Container(
-        margin: EdgeInsets.all(5.0),
-        padding: EdgeInsets.all(5.0),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey,
-            width: 1.0,
-          ),
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-        ),
-        child: 
-        Column(
-          children: [
-            quill.QuillToolbar.basic(
-              controller: _controller,
-              showAlignmentButtons: true,
-              showBackgroundColorButton: false,
-              showCameraButton: false,
-              showImageButton: false,
-              showVideoButton: false,
-              showDividers: false,
-              showColorButton: false,
-              showUndo: false,
-              showRedo: false,
-              showQuote: false,
-              showClearFormat: false,
-              showIndent: false,
-              showLink: false,
-              showCodeBlock: false,
-              showInlineCode: false,
-              showListCheck: false,
-              showJustifyAlignment: false,
-              showHeaderStyle: false,
+          margin: EdgeInsets.all(5.0),
+          padding: EdgeInsets.all(5.0),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey,
+              width: 1.0,
             ),
-            Expanded(
-              child: Container(
-                child: quill.QuillEditor.basic(
-                    controller: _controller,
-                    readOnly: !_isLoading ? false : true),
+            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          ),
+          child: Column(
+            children: [
+              quill.QuillSimpleToolbar(
+                controller: _controller,
+                // showAlignmentButtons: true,
+                // showBackgroundColorButton: false,
+                // showCameraButton: false,
+                // showImageButton: false,
+                // showVideoButton: false,
+                // showDividers: false,
+                // showColorButton: false,
+                // showUndo: false,
+                // showRedo: false,
+                // showQuote: false,
+                // showClearFormat: false,
+                // showIndent: false,
+                // showLink: false,
+                // showCodeBlock: false,
+                // showInlineCode: false,
+                // showListCheck: false,
+                // showJustifyAlignment: false,
+                // showHeaderStyle: false,
               ),
-            )
-          ],
-        )
-      ),
+              Expanded(
+                child: Container(
+                  child: quill.QuillEditor.basic(
+                    controller: _controller,
+                    config: quill.QuillEditorConfig(
+                        checkBoxReadOnly: !_isLoading ? false : true),
+                  ),
+                ),
+              )
+            ],
+          )),
     );
   }
 
@@ -1665,7 +1667,6 @@ class _CreateLeadState extends State<CreateLead> {
             leadBloc.openLeads.clear();
             leadBloc.offset = "";
             await leadBloc.fetchLeads();
-            await FirebaseAnalytics.instance.logEvent(name: "Lead_Creatd");
             Navigator.pushReplacementNamed(context, '/leads_list');
           } else if (_result['error'] == true) {
             setState(() {

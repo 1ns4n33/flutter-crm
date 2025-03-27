@@ -8,7 +8,6 @@ import 'package:bottle_crm/ui/widgets/bottom_navigation_bar.dart';
 import 'package:bottle_crm/utils/utils.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:bottle_crm/bloc/task_bloc.dart';
-import 'package:random_color/random_color.dart';
 
 class TasksList extends StatefulWidget {
   TasksList();
@@ -275,10 +274,7 @@ class _TasksListState extends State<TasksList> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            onPrimary: Theme.of(context).primaryColor,
-                          ),
+                          style: ElevatedButton.styleFrom(),
                           onPressed: () {
                             setState(() {
                               _isFilter = false;
@@ -299,10 +295,7 @@ class _TasksListState extends State<TasksList> {
                           )),
                       SizedBox(width: 20.0),
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).primaryColor,
-                            onPrimary: Colors.white,
-                          ),
+                          style: ElevatedButton.styleFrom(),
                           onPressed: () {
                             FocusScope.of(context).unfocus();
                             _submitForm();
@@ -380,8 +373,8 @@ class _TasksListState extends State<TasksList> {
                                     child: Row(
                                       children: [
                                         Container(
-                                      child: ProfilePicViewWidget(
-                                          _tasks[index]
+                                          child: ProfilePicViewWidget(_tasks[
+                                                  index]
                                               .assignedTo!
                                               .map((assignedUser) =>
                                                   assignedUser.profileUrl == ""
@@ -389,15 +382,13 @@ class _TasksListState extends State<TasksList> {
                                                           .firstName![0].inCaps
                                                       : assignedUser.profileUrl)
                                               .toList()),
-                                    ),
+                                        ),
                                       ],
                                     ),
                                   ),
                                   Container(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 5.0, vertical: 3.0),
-                                    color: randomColor.randomColor(
-                                        colorBrightness: ColorBrightness.light),
                                     child: Text(
                                       _tasks[index].status!,
                                       style: TextStyle(
@@ -444,7 +435,7 @@ class _TasksListState extends State<TasksList> {
                                 onTap: () {
                                   Navigator.pushReplacementNamed(
                                       context, "/dashboard");
-                                  currentBottomNavigationIndex="0";     
+                                  currentBottomNavigationIndex = "0";
                                 },
                                 child: Icon(Icons.arrow_back_ios,
                                     color: Colors.white,
@@ -488,8 +479,8 @@ class _TasksListState extends State<TasksList> {
                           padding: EdgeInsets.symmetric(horizontal: 25.0),
                           height: screenHeight * 0.06,
                           decoration: BoxDecoration(
-                              color: bottomNavBarSelectedTextColor,
-                              ),
+                            color: bottomNavBarSelectedTextColor,
+                          ),
                         ),
                       ],
                     ),

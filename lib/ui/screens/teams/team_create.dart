@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:bottle_crm/bloc/team_bloc.dart';
 import 'package:bottle_crm/bloc/user_bloc.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/material.dart';
 import 'package:bottle_crm/utils/utils.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
@@ -224,32 +224,34 @@ class _CreateTeamState extends State<CreateTeam> {
         ),
         child: Column(
           children: [
-            quill.QuillToolbar.basic(
+            quill.QuillSimpleToolbar(
               controller: _controller,
-              showAlignmentButtons: true,
-              showBackgroundColorButton: false,
-              showCameraButton: false,
-              showImageButton: false,
-              showVideoButton: false,
-              showDividers: false,
-              showColorButton: false,
-              showUndo: false,
-              showRedo: false,
-              showQuote: false,
-              showClearFormat: false,
-              showIndent: false,
-              showLink: false,
-              showCodeBlock: false,
-              showInlineCode: false,
-              showListCheck: false,
-              showJustifyAlignment: false,
-              showHeaderStyle: false,
+              // showAlignmentButtons: true,
+              // showBackgroundColorButton: false,
+              // showCameraButton: false,
+              // showImageButton: false,
+              // showVideoButton: false,
+              // showDividers: false,
+              // showColorButton: false,
+              // showUndo: false,
+              // showRedo: false,
+              // showQuote: false,
+              // showClearFormat: false,
+              // showIndent: false,
+              // showLink: false,
+              // showCodeBlock: false,
+              // showInlineCode: false,
+              // showListCheck: false,
+              // showJustifyAlignment: false,
+              // showHeaderStyle: false,
             ),
             Expanded(
               child: Container(
                 child: quill.QuillEditor.basic(
-                    controller: _controller,
-                    readOnly: !_isLoading ? false : true),
+                  controller: _controller,
+                  config: quill.QuillEditorConfig(
+                      checkBoxReadOnly: !_isLoading ? false : true),
+                ),
               ),
             )
           ],
@@ -479,7 +481,6 @@ class _CreateTeamState extends State<CreateTeam> {
         showToaster(_result['message'], context);
         teamBloc.teams.clear();
         await teamBloc.fetchTeams();
-        await FirebaseAnalytics.instance.logEvent(name: "team_Created");
         Navigator.pushReplacementNamed(context, '/teams_list');
       } else if (_result['error'] == true) {
         setState(() {

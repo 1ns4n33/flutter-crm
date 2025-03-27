@@ -1,6 +1,6 @@
 import 'package:bottle_crm/bloc/contact_bloc.dart';
 import 'package:bottle_crm/bloc/lead_bloc.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:bottle_crm/utils/utils.dart';
@@ -1053,7 +1053,7 @@ class _CreateContactState extends State<CreateContact> {
                           height: 48.0,
                           margin: EdgeInsets.only(bottom: 5.0),
                           child: DropdownSearch<String?>(
-                            items: leadBloc.countries,
+                            items: (a, b) => leadBloc.countries,
                             onChanged: print,
                             onSaved: (selection) {
                               if (selection == null) {
@@ -1067,7 +1067,7 @@ class _CreateContactState extends State<CreateContact> {
                             selectedItem: contactBloc
                                 .currentEditContact['address']['country'],
                             popupProps: PopupProps.bottomSheet(
-                              itemBuilder: (context, item, isSelected) {
+                              itemBuilder: (context, item, isSelected, _) {
                                 return Container(
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 15.0, vertical: 10.0),
@@ -1109,32 +1109,34 @@ class _CreateContactState extends State<CreateContact> {
         ),
         child: Column(
           children: [
-            quill.QuillToolbar.basic(
+            quill.QuillSimpleToolbar(
               controller: _controller,
-              showAlignmentButtons: true,
-              showBackgroundColorButton: false,
-              showCameraButton: false,
-              showImageButton: false,
-              showVideoButton: false,
-              showDividers: false,
-              showColorButton: false,
-              showUndo: false,
-              showRedo: false,
-              showQuote: false,
-              showClearFormat: false,
-              showIndent: false,
-              showLink: false,
-              showCodeBlock: false,
-              showInlineCode: false,
-              showListCheck: false,
-              showJustifyAlignment: false,
-              showHeaderStyle: false,
+              // showAlignmentButtons: true,
+              // showBackgroundColorButton: false,
+              // showCameraButton: false,
+              // showImageButton: false,
+              // showVideoButton: false,
+              // showDividers: false,
+              // showColorButton: false,
+              // showUndo: false,
+              // showRedo: false,
+              // showQuote: false,
+              // showClearFormat: false,
+              // showIndent: false,
+              // showLink: false,
+              // showCodeBlock: false,
+              // showInlineCode: false,
+              // showListCheck: false,
+              // showJustifyAlignment: false,
+              // showHeaderStyle: false,
             ),
             Expanded(
               child: Container(
                 child: quill.QuillEditor.basic(
-                    controller: _controller,
-                    readOnly: !_isLoading ? false : true),
+                  controller: _controller,
+                  config: quill.QuillEditorConfig(
+                      checkBoxReadOnly: !_isLoading ? false : true),
+                ),
               ),
             )
           ],
@@ -1405,7 +1407,6 @@ class _CreateContactState extends State<CreateContact> {
           contactBloc.contacts.clear();
           contactBloc.offset = "";
           await contactBloc.fetchContacts();
-          await FirebaseAnalytics.instance.logEvent(name: "Contact_Created");
           Navigator.pushReplacementNamed(context, '/contacts_list');
         } else if (_result['error'] == true) {
           setState(() {

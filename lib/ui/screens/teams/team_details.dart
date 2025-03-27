@@ -3,7 +3,7 @@ import 'package:bottle_crm/bloc/team_bloc.dart';
 import 'package:bottle_crm/model/team.dart';
 import 'package:bottle_crm/ui/widgets/loader.dart';
 import 'package:bottle_crm/ui/widgets/profile_pic_widget.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottle_crm/utils/utils.dart';
@@ -495,7 +495,6 @@ class _TeamDeailsState extends State<TeamkDeails> {
       showToaster(result['message'], context);
       teamBloc.teams.clear();
       await teamBloc.fetchTeams();
-      await FirebaseAnalytics.instance.logEvent(name: "team_Deleted");
       Navigator.pushReplacementNamed(context, '/teams_list');
     } else if (result['error'] == true) {
       showToaster(result['message'], context);

@@ -3,12 +3,11 @@ import 'package:bottle_crm/bloc/task_bloc.dart';
 import 'package:bottle_crm/model/task.dart';
 import 'package:bottle_crm/ui/widgets/loader.dart';
 import 'package:bottle_crm/ui/widgets/profile_pic_widget.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottle_crm/utils/utils.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:random_color/random_color.dart';
 
 class TasskDeails extends StatefulWidget {
   TasskDeails();
@@ -198,8 +197,6 @@ class _TasskDeailsState extends State<TasskDeails> {
                 SizedBox(height: 5.0),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
-                  color: randomColor.randomColor(
-                      colorBrightness: ColorBrightness.light),
                   child: Text(
                     taskBloc.currentTask!.status!,
                     style: TextStyle(color: Colors.white, fontSize: 12.0),
@@ -556,7 +553,6 @@ class _TasskDeailsState extends State<TasskDeails> {
       showToaster(result['message'], context);
       taskBloc.tasks.clear();
       await taskBloc.fetchTasks();
-      await FirebaseAnalytics.instance.logEvent(name: "Task_Deleted");
       Navigator.pushReplacementNamed(context, '/tasks_list');
     } else if (result['error'] == true) {
       showToaster(result['message'], context);

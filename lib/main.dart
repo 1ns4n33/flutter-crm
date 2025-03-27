@@ -40,19 +40,13 @@ import 'package:bottle_crm/ui/screens/users/user_create.dart';
 import 'package:bottle_crm/ui/screens/users/user_details.dart';
 import 'package:bottle_crm/ui/screens/users/users_list.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase?.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  //static FirebaseAnalytics _analytics = FirebaseAnalytics.instance;
-  // static FirebaseAnalyticsObserver getAnalyticsObserver =
-  //     FirebaseAnalyticsObserver(analytics: _analytics);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -60,7 +54,8 @@ class MyApp extends StatelessWidget {
       title: 'bottlecrm',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        buttonTheme:ButtonThemeData(buttonColor:Color.fromRGBO(62, 121, 247, 1)),
+          buttonTheme:
+              ButtonThemeData(buttonColor: Color.fromRGBO(62, 121, 247, 1)),
           scaffoldBackgroundColor: Color.fromRGBO(236, 238, 244, 1),
           //buttonColor: Color.fromRGBO(62, 121, 247, 1),
           primaryColor: Color.fromRGBO(62, 121, 247, 1),
@@ -124,7 +119,8 @@ class MyApp extends StatelessWidget {
         '/companies_List': (BuildContext context) => CompaniesList(),
         '/settings_List': (BuildContext context) => SettingsList(),
         '/settings_details': (BuildContext context) => SettingsDeails(),
-        '/settings_userDetails': (BuildContext context) => SettingsUserDetails(),
+        '/settings_userDetails': (BuildContext context) =>
+            SettingsUserDetails(),
       },
     );
   }

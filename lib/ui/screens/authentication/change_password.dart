@@ -1,5 +1,5 @@
 import 'package:bottle_crm/bloc/auth_bloc.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/material.dart';
 import 'package:bottle_crm/utils/utils.dart';
 
@@ -55,7 +55,6 @@ class _ChangePasswordState extends State<ChangePassword> {
         _errorMessage = '';
       });
       showToaster('Password changed successfully.', context);
-      await FirebaseAnalytics.instance.logEvent(name: "Password_Changes");
       Navigator.pop(context);
     } else if (result['error'] == true) {
       if (result['message'] != null) {
@@ -76,14 +75,14 @@ class _ChangePasswordState extends State<ChangePassword> {
       setState(() {
         _errorMessage = '';
       });
-      showErrorMessage(context,result['message'].toString());
+      showErrorMessage(context, result['message'].toString());
     }
     setState(() {
       _isLoading = false;
     });
   }
 
-  showErrorMessage(BuildContext context,String message) {
+  showErrorMessage(BuildContext context, String message) {
     return showDialog(
         context: context,
         builder: (_) => AlertDialog(
@@ -139,8 +138,8 @@ class _ChangePasswordState extends State<ChangePassword> {
               Expanded(
                   child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    ),
+                  color: Colors.white,
+                ),
                 child: buildPasswordScreen(),
               ))
             ],

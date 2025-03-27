@@ -5,7 +5,7 @@ import 'package:bottle_crm/bloc/dashboard_bloc.dart';
 import 'package:bottle_crm/bloc/event_bloc.dart';
 import 'package:bottle_crm/bloc/team_bloc.dart';
 import 'package:bottle_crm/bloc/user_bloc.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:bottle_crm/utils/utils.dart';
@@ -58,7 +58,7 @@ class _CreateEventState extends State<CreateEvent> {
         .format(DateFormat("yyyy-MM-dd").parse(DateTime.now().toString()));
     _endDateController.text = DateFormat("yyyy-MM-dd")
         .format(DateFormat("yyyy-MM-dd").parse(DateTime.now().toString()));
-    
+
     _startTimeController.text = "00:00:00";
     _endTimeController.text = "00:00:00";
     super.initState();
@@ -451,7 +451,7 @@ class _CreateEventState extends State<CreateEvent> {
                               ),
                             ),
                           ])),
-                          Container(
+                  Container(
                       padding: padding(),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -524,37 +524,37 @@ class _CreateEventState extends State<CreateEvent> {
                                   errorBorder: buildBorder(Colors.black54),
                                   border: buildBorder(Colors.black54),
                                   suffixIcon: IconButton(
-                                    onPressed: () async {
-                                      final TimeOfDay? picked_s =
-                                          await showTimePicker(
-                                              context: context,
-                                              initialTime: endSelectedTime,
-                                              builder: (BuildContext? context,
-                                                  Widget? child) {
-                                                return MediaQuery(
-                                                  data: MediaQuery.of(context!)
-                                                      .copyWith(
-                                                          alwaysUse24HourFormat:
-                                                              true),
-                                                  child: child!,
-                                                );
-                                              });
+                                      onPressed: () async {
+                                        final TimeOfDay? picked_s =
+                                            await showTimePicker(
+                                                context: context,
+                                                initialTime: endSelectedTime,
+                                                builder: (BuildContext? context,
+                                                    Widget? child) {
+                                                  return MediaQuery(
+                                                    data: MediaQuery.of(
+                                                            context!)
+                                                        .copyWith(
+                                                            alwaysUse24HourFormat:
+                                                                true),
+                                                    child: child!,
+                                                  );
+                                                });
 
-                                      if (picked_s != null &&
-                                          picked_s != endSelectedTime)
-                                        setState(() {
-                                          endSelectedTime = picked_s;
-                                          DateTime parsedTime = DateFormat.jm()
-                                              .parse(picked_s
-                                                  .format(context)
-                                                  .toString());
-                                          _endTimeController.text =
-                                              DateFormat('HH:mm:ss')
-                                                  .format(parsedTime);
-                                        });
-                                    },
-                                    icon: Icon(Icons.punch_clock)
-                                  ),
+                                        if (picked_s != null &&
+                                            picked_s != endSelectedTime)
+                                          setState(() {
+                                            endSelectedTime = picked_s;
+                                            DateTime parsedTime =
+                                                DateFormat.jm().parse(picked_s
+                                                    .format(context)
+                                                    .toString());
+                                            _endTimeController.text =
+                                                DateFormat('HH:mm:ss')
+                                                    .format(parsedTime);
+                                          });
+                                      },
+                                      icon: Icon(Icons.punch_clock)),
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -718,32 +718,34 @@ class _CreateEventState extends State<CreateEvent> {
         ),
         child: Column(
           children: [
-            quill.QuillToolbar.basic(
+            quill.QuillSimpleToolbar(
               controller: _controller,
-              showAlignmentButtons: true,
-              showBackgroundColorButton: false,
-              showCameraButton: false,
-              showImageButton: false,
-              showVideoButton: false,
-              showDividers: false,
-              showColorButton: false,
-              showUndo: false,
-              showRedo: false,
-              showQuote: false,
-              showClearFormat: false,
-              showIndent: false,
-              showLink: false,
-              showCodeBlock: false,
-              showInlineCode: false,
-              showListCheck: false,
-              showJustifyAlignment: false,
-              showHeaderStyle: false,
+              // showAlignmentButtons: true,
+              // showBackgroundColorButton: false,
+              // showCameraButton: false,
+              // showImageButton: false,
+              // showVideoButton: false,
+              // showDividers: false,
+              // showColorButton: false,
+              // showUndo: false,
+              // showRedo: false,
+              // showQuote: false,
+              // showClearFormat: false,
+              // showIndent: false,
+              // showLink: false,
+              // showCodeBlock: false,
+              // showInlineCode: false,
+              // showListCheck: false,
+              // showJustifyAlignment: false,
+              // showHeaderStyle: false,
             ),
             Expanded(
               child: Container(
                 child: quill.QuillEditor.basic(
-                    controller: _controller,
-                    readOnly: !_isLoading ? false : true),
+                  controller: _controller,
+                  config: quill.QuillEditorConfig(
+                      checkBoxReadOnly: !_isLoading ? false : true),
+                ),
               ),
             )
           ],
@@ -966,7 +968,6 @@ class _CreateEventState extends State<CreateEvent> {
         eventBloc.offset = "";
         await eventBloc.fetchEvents();
         eventBloc.events;
-        await FirebaseAnalytics.instance.logEvent(name: "Event_Created");
         Navigator.pushReplacementNamed(context, '/events_list');
       } else if (_result['error'] == true) {
         setState(() {

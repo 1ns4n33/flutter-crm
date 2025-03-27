@@ -26,18 +26,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
   checkInternet() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
-      if (preferences.getString('authToken') != null &&
-          preferences.getString('authToken') != "") {
-        await authBloc.fetchCompanies();
-        Navigator.pushReplacementNamed(context, '/companies_List');
-      } else {
-        Navigator.pushReplacementNamed(context, '/login');
-      }
+
+    if (preferences.getString('authToken') != null &&
+        preferences.getString('authToken') != "") {
+      await authBloc.fetchCompanies();
+      Navigator.pushReplacementNamed(context, '/companies_List');
     } else {
-      showNoInternet(context);
+      Navigator.pushReplacementNamed(context, '/login');
     }
   }
 

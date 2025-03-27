@@ -14,7 +14,6 @@ import 'package:bottle_crm/bloc/team_bloc.dart';
 import 'package:bottle_crm/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:random_color/random_color.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 var screenWidth;
@@ -29,8 +28,6 @@ Color bottomNavBarTextColor = Color.fromRGBO(75, 75, 78, 1);
 Color submitButtonColor = Color.fromRGBO(75, 153, 90, 1);
 Color bottomNavBarSelectedBGColor = Color.fromRGBO(219, 232, 249, 1);
 Color bottomNavBarSelectedTextColor = Color.fromRGBO(15, 36, 62, 1);
-
-RandomColor randomColor = RandomColor();
 
 fetchRequiredData() async {
   print("fetching data ▁ ▂ ▃ ▄ ▅ ▆");

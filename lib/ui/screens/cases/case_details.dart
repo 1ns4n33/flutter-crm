@@ -1,7 +1,7 @@
 import 'package:bottle_crm/bloc/case_bloc.dart';
 import 'package:bottle_crm/model/case.dart';
 import 'package:bottle_crm/ui/widgets/loader.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -774,7 +774,6 @@ class _CaseDetailsState extends State<CaseDetails> {
       showToaster(result['message'], context);
       caseBloc.cases.clear();
       await caseBloc.fetchCases();
-      await FirebaseAnalytics.instance.logEvent(name: "Case_deleted");
       Navigator.pushReplacementNamed(context, '/cases_list');
     } else if (result['error'] == true) {
       showToaster(result['message'], context);

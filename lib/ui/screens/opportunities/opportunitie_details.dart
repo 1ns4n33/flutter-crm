@@ -2,13 +2,12 @@ import 'package:bottle_crm/bloc/opportunity_bloc.dart';
 import 'package:bottle_crm/model/opportunities.dart';
 import 'package:bottle_crm/ui/widgets/loader.dart';
 import 'package:bottle_crm/ui/widgets/profile_pic_widget.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:bottle_crm/utils/utils.dart';
 import 'package:bottle_crm/ui/widgets/tags_widget.dart';
-import 'package:random_color/random_color.dart';
 import '../../../utils/utils.dart';
 import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 
@@ -324,8 +323,6 @@ class _OpportunitiesDetailsState extends State<OpportunitiesDetails> {
                     ? Container(
                         padding: EdgeInsets.symmetric(
                             horizontal: 5.0, vertical: 3.0),
-                        color: randomColor.randomColor(
-                            colorBrightness: ColorBrightness.dark),
                         child: Text(
                           opportunityBloc.currentOpportunity!.amount!,
                           style: TextStyle(color: Colors.white, fontSize: 15.0),
@@ -347,8 +344,7 @@ class _OpportunitiesDetailsState extends State<OpportunitiesDetails> {
                                   assignedUser.profileUrl == ""
                                       ? assignedUser.firstName![0].inCaps
                                       : assignedUser.profileUrl)
-                              .toList())
-                          ),
+                              .toList())),
                     ],
                   ),
                 ),
@@ -812,7 +808,6 @@ class _OpportunitiesDetailsState extends State<OpportunitiesDetails> {
       showToaster(result['message'], context);
       opportunityBloc.opportunities.clear();
       opportunityBloc.fetchOpportunities();
-      await FirebaseAnalytics.instance.logEvent(name: "Opportunity_Deleted");
       Navigator.pushNamedAndRemoveUntil(
           context, '/opportunities_list', ((route) => false));
     } else if (result['error'] == true) {

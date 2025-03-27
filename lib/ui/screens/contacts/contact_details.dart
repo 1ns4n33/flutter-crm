@@ -2,7 +2,7 @@ import 'package:bottle_crm/bloc/auth_bloc.dart';
 import 'package:bottle_crm/bloc/contact_bloc.dart';
 import 'package:bottle_crm/model/contact.dart';
 import 'package:bottle_crm/ui/widgets/loader.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottle_crm/utils/utils.dart';
@@ -711,7 +711,6 @@ class _ContactDetailsState extends State<ContactDetails> {
       showToaster(result['message'], context);
       contactBloc.contacts.clear();
       await contactBloc.fetchContacts();
-      await FirebaseAnalytics.instance.logEvent(name: "Contact_Deleted");
       Navigator.pushReplacementNamed(context, '/contacts_list');
     } else if (result['error'] == true) {
       showToaster(result['message'], context);

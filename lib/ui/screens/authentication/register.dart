@@ -1,5 +1,5 @@
 import 'package:bottle_crm/responsive.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
@@ -57,7 +57,6 @@ class _RegisterState extends State<Register> {
         _errorMessage = '';
       });
       await authBloc.fetchCompanies();
-      await FirebaseAnalytics.instance.logEvent(name: "Sign_up");
       Navigator.pushNamedAndRemoveUntil(
           context, '/dashboard', (route) => false);
     } else if (result['error'] == true) {

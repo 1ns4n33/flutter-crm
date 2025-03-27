@@ -3,14 +3,13 @@ import 'package:bottle_crm/model/lead.dart';
 import 'package:bottle_crm/ui/widgets/loader.dart';
 import 'package:bottle_crm/ui/widgets/profile_pic_widget.dart';
 import 'package:bottle_crm/ui/widgets/tags_widget.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottle_crm/bloc/lead_bloc.dart';
 import 'package:bottle_crm/utils/utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:random_color/random_color.dart';
 
 class LeadDetails extends StatefulWidget {
   LeadDetails();
@@ -329,8 +328,6 @@ class _LeadDetailsState extends State<LeadDetails> {
                         ? Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 5.0, vertical: 3.0),
-                            color: randomColor.randomColor(
-                                colorBrightness: ColorBrightness.dark),
                             child: Text(
                               leadBloc.currentLead!.opportunityAmount!,
                               style: TextStyle(
@@ -342,8 +339,6 @@ class _LeadDetailsState extends State<LeadDetails> {
                         ? Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 5.0, vertical: 3.0),
-                            color: randomColor.randomColor(
-                                colorBrightness: ColorBrightness.dark),
                             child: Text(
                               leadBloc.currentLead!.status!,
                               style: TextStyle(
@@ -890,7 +885,6 @@ class _LeadDetailsState extends State<LeadDetails> {
       showToaster(result['message'], context);
       leadBloc.openLeads.clear();
       await leadBloc.fetchLeads();
-      await FirebaseAnalytics.instance.logEvent(name: "Lead_Deleted");
       Navigator.pushReplacementNamed(context, '/leads_list');
     } else if (result['error'] == true) {
       showToaster(result['message'], context);

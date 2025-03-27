@@ -2,13 +2,12 @@ import 'package:bottle_crm/bloc/event_bloc.dart';
 import 'package:bottle_crm/model/events.dart';
 import 'package:bottle_crm/ui/widgets/loader.dart';
 import 'package:bottle_crm/ui/widgets/profile_pic_widget.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottle_crm/utils/utils.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:random_color/random_color.dart';
 
 class EventDetails extends StatefulWidget {
   EventDetails();
@@ -68,8 +67,8 @@ class _EventDeailsState extends State<EventDetails> {
                             if (!_isLoading) {
                               eventBloc.currentEditEventId =
                                   eventBloc.currentEvent!.id.toString();
-                              await eventBloc
-                                  .updateCurrentEditEvent(eventBloc.currentEvent!);
+                              await eventBloc.updateCurrentEditEvent(
+                                  eventBloc.currentEvent!);
                               Navigator.pushNamed(context, '/event_create');
                             }
                           },
@@ -198,8 +197,6 @@ class _EventDeailsState extends State<EventDetails> {
                 SizedBox(height: 5.0),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
-                  color: randomColor.randomColor(
-                      colorBrightness: ColorBrightness.light),
                   child: Text(
                     eventBloc.currentEvent!.status!,
                     style: TextStyle(color: Colors.white, fontSize: 12.0),
@@ -304,8 +301,10 @@ class _EventDeailsState extends State<EventDetails> {
                             eventBloc.currentEvent!.startDate! == ""
                                 ? "-----"
                                 : DateFormat("dd-MM-yyyy").format(
-                                    DateTime.parse(
-                                        eventBloc.currentEvent!.startDate!))+" "+eventBloc.currentEvent!.startTime!,
+                                        DateTime.parse(eventBloc
+                                            .currentEvent!.startDate!)) +
+                                    " " +
+                                    eventBloc.currentEvent!.startTime!,
                             style: TextStyle(
                                 color: Colors.black45,
                                 fontWeight: FontWeight.w600,
@@ -333,8 +332,10 @@ class _EventDeailsState extends State<EventDetails> {
                             eventBloc.currentEvent!.startDate! == ""
                                 ? "-----"
                                 : DateFormat("dd-MM-yyyy").format(
-                                    DateTime.parse(
-                                        eventBloc.currentEvent!.startDate!))+" "+eventBloc.currentEvent!.endTime!,
+                                        DateTime.parse(eventBloc
+                                            .currentEvent!.startDate!)) +
+                                    " " +
+                                    eventBloc.currentEvent!.endTime!,
                             style: TextStyle(
                                 color: Colors.black45,
                                 fontWeight: FontWeight.w600,
@@ -587,7 +588,6 @@ class _EventDeailsState extends State<EventDetails> {
       showToaster(result['message'], context);
       eventBloc.events.clear();
       await eventBloc.fetchEvents();
-      await FirebaseAnalytics.instance.logEvent(name: "Event_Deleted");
       Navigator.pushReplacementNamed(context, '/events_list');
     } else if (result['error'] == true) {
       showToaster(result['message'], context);

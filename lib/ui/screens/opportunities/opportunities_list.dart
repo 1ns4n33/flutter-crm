@@ -10,7 +10,6 @@ import 'package:bottle_crm/ui/widgets/bottom_navigation_bar.dart';
 import 'package:bottle_crm/utils/utils.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
-import 'package:random_color/random_color.dart';
 
 class OpportunitiesList extends StatefulWidget {
   OpportunitiesList();
@@ -388,10 +387,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            onPrimary: Theme.of(context).primaryColor,
-                          ),
+                          style: ElevatedButton.styleFrom(),
                           onPressed: () {
                             setState(() {
                               _isFilter = false;
@@ -414,10 +410,7 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                           )),
                       SizedBox(width: 20.0),
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).primaryColor,
-                            onPrimary: Colors.white,
-                          ),
+                          style: ElevatedButton.styleFrom(),
                           onPressed: () {
                             FocusScope.of(context).unfocus();
                             _submitForm();
@@ -583,9 +576,6 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                                               padding: EdgeInsets.symmetric(
                                                   horizontal: 5.0,
                                                   vertical: 3.0),
-                                              color: randomColor.randomColor(
-                                                  colorBrightness:
-                                                      ColorBrightness.light),
                                               child: Text(
                                                 _opportunities[index].stage!,
                                                 style: TextStyle(
@@ -624,8 +614,6 @@ class _OpportunitiesListState extends State<OpportunitiesList> {
                 : 'No Opportunitis Found.'),
           );
   }
-
- 
 
   @override
   Widget build(BuildContext context) {

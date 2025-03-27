@@ -6,7 +6,7 @@ import 'package:bottle_crm/bloc/opportunity_bloc.dart';
 import 'package:bottle_crm/bloc/team_bloc.dart';
 import 'package:bottle_crm/bloc/user_bloc.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:bottle_crm/utils/utils.dart';
@@ -237,7 +237,8 @@ class _CreateCaseState extends State<CreateCase> {
                               height: 48.0,
                               margin: EdgeInsets.only(bottom: 5.0),
                               child: DropdownSearch<String?>(
-                                items: caseBloc.statusObjForDropDown,
+                                items: (filter, infiniteScrollProps) =>
+                                    caseBloc.statusObjForDropDown,
                                 onChanged: print,
                                 onSaved: (selection) {
                                   if (selection == null) {
@@ -250,7 +251,7 @@ class _CreateCaseState extends State<CreateCase> {
                                 selectedItem:
                                     caseBloc.currentEditCase['status'],
                                 popupProps: PopupProps.bottomSheet(
-                                  itemBuilder: (context, item, isSelected) {
+                                  itemBuilder: (context, item, isSelected, _) {
                                     return Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 15.0, vertical: 10.0),
@@ -307,7 +308,8 @@ class _CreateCaseState extends State<CreateCase> {
                               height: 48.0,
                               margin: EdgeInsets.only(bottom: 5.0),
                               child: DropdownSearch<String?>(
-                                items: opportunityBloc.accountsObjforDropDown,
+                                items: (filter, infiniteScrollProps) =>
+                                    opportunityBloc.accountsObjforDropDown,
                                 onChanged: print,
                                 onSaved: (selection) {
                                   if (selection == null) {
@@ -320,7 +322,7 @@ class _CreateCaseState extends State<CreateCase> {
                                 selectedItem:
                                     caseBloc.currentEditCase['account'],
                                 popupProps: PopupProps.bottomSheet(
-                                  itemBuilder: (context, item, isSelected) {
+                                  itemBuilder: (context, item, isSelected, _) {
                                     return Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 15.0, vertical: 10.0),
@@ -385,7 +387,8 @@ class _CreateCaseState extends State<CreateCase> {
                               height: 48.0,
                               margin: EdgeInsets.only(bottom: 5.0),
                               child: DropdownSearch<String?>(
-                                items: caseBloc.priorityObjForDropDown,
+                                items: (filter, infiniteScrollProps) =>
+                                    caseBloc.priorityObjForDropDown,
                                 onChanged: print,
                                 onSaved: (selection) {
                                   if (selection == null) {
@@ -398,7 +401,7 @@ class _CreateCaseState extends State<CreateCase> {
                                 selectedItem:
                                     caseBloc.currentEditCase['priority'],
                                 popupProps: PopupProps.bottomSheet(
-                                  itemBuilder: (context, item, isSelected) {
+                                  itemBuilder: (context, item, isSelected, _) {
                                     return Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 15.0, vertical: 10.0),
@@ -450,7 +453,8 @@ class _CreateCaseState extends State<CreateCase> {
                               height: 48.0,
                               margin: EdgeInsets.only(bottom: 5.0),
                               child: DropdownSearch<String?>(
-                                items: caseBloc.typeOfCaseObjForDropDown,
+                                items: (filter, infiniteScrollProps) =>
+                                    caseBloc.typeOfCaseObjForDropDown,
                                 onChanged: print,
                                 onSaved: (selection) {
                                   if (selection == null) {
@@ -464,7 +468,7 @@ class _CreateCaseState extends State<CreateCase> {
                                 selectedItem:
                                     caseBloc.currentEditCase['type_of_case'],
                                 popupProps: PopupProps.bottomSheet(
-                                  itemBuilder: (context, item, isSelected) {
+                                  itemBuilder: (context, item, isSelected, _) {
                                     return Container(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 15.0, vertical: 10.0),
@@ -700,32 +704,34 @@ class _CreateCaseState extends State<CreateCase> {
         ),
         child: Column(
           children: [
-            quill.QuillToolbar.basic(
+            quill.QuillSimpleToolbar(
               controller: _controller,
-              showAlignmentButtons: true,
-              showBackgroundColorButton: false,
-              showCameraButton: false,
-              showImageButton: false,
-              showVideoButton: false,
-              showDividers: false,
-              showColorButton: false,
-              showUndo: false,
-              showRedo: false,
-              showQuote: false,
-              showClearFormat: false,
-              showIndent: false,
-              showLink: false,
-              showCodeBlock: false,
-              showInlineCode: false,
-              showListCheck: false,
-              showJustifyAlignment: false,
-              showHeaderStyle: false,
+              // showAlignmentButtons: true,
+              // showBackgroundColorButton: false,
+              // showCameraButton: false,
+              // showImageButton: false,
+              // showVideoButton: false,
+              // showDividers: false,
+              // showColorButton: false,
+              // showUndo: false,
+              // showRedo: false,
+              // showQuote: false,
+              // showClearFormat: false,
+              // showIndent: false,
+              // showLink: false,
+              // showCodeBlock: false,
+              // showInlineCode: false,
+              // showListCheck: false,
+              // showJustifyAlignment: false,
+              // showHeaderStyle: false,
             ),
             Expanded(
               child: Container(
                 child: quill.QuillEditor.basic(
-                    controller: _controller,
-                    readOnly: !_isLoading ? false : true),
+                  controller: _controller,
+                  config: quill.QuillEditorConfig(
+                      checkBoxReadOnly: !_isLoading ? false : true),
+                ),
               ),
             )
           ],
@@ -950,7 +956,6 @@ class _CreateCaseState extends State<CreateCase> {
         caseBloc.cases.clear();
         caseBloc.offset = "";
         await caseBloc.fetchCases();
-        await FirebaseAnalytics.instance.logEvent(name: "Case_Created");
         Navigator.pushReplacementNamed(context, '/cases_list');
       } else if (_result['error'] == true) {
         setState(() {

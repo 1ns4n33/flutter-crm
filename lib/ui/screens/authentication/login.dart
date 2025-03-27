@@ -1,6 +1,6 @@
 import 'package:bottle_crm/responsive.dart';
 import 'package:bottle_crm/utils/validations.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
@@ -50,7 +50,6 @@ class _LoginState extends State<Login> {
         _errorMessage = '';
       });
       await authBloc.fetchCompanies();
-      await FirebaseAnalytics.instance.logEvent(name: "login");
       Navigator.pushNamedAndRemoveUntil(
           context, '/companies_List', (route) => false);
     } else if (result['error'] == true) {
@@ -86,10 +85,11 @@ class _LoginState extends State<Login> {
   }
 
   Widget loginWidget() {
-    return Responsive(
-        mobile: buildMobileScreen(),
-        tablet: buildTabletScreen(),
-        desktop: Container());
+    return buildTabletScreen();
+    // return Responsive(
+    //     mobile: buildMobileScreen(),
+    //     tablet: buildTabletScreen(),
+    //     desktop: Container());
   }
 
   buildMobileScreen() {

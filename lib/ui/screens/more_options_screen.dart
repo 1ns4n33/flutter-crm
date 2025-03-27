@@ -1,6 +1,5 @@
 import 'dart:core';
 
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottle_crm/bloc/auth_bloc.dart';
@@ -109,8 +108,6 @@ class _MoreOptionsState extends State<MoreOptions> {
                     prefs.remove('authToken');
                     prefs.remove('org');
                     currentBottomNavigationIndex = "0";
-                    await FirebaseAnalytics.instance
-                        .logEvent(name: "User_Logged_Out");
                     Navigator.pushReplacementNamed(context, "/login");
                   },
                   child: Text("Logout")),
@@ -124,8 +121,8 @@ class _MoreOptionsState extends State<MoreOptions> {
         padding: EdgeInsets.only(left: 20.0, right: 10.0),
         height: screenHeight * 0.15,
         decoration: BoxDecoration(
-            color: bottomNavBarSelectedTextColor,
-            ),
+          color: bottomNavBarSelectedTextColor,
+        ),
         child: Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -4,7 +4,7 @@ import 'package:bottle_crm/model/account.dart';
 import 'package:bottle_crm/ui/widgets/loader.dart';
 import 'package:bottle_crm/ui/widgets/profile_pic_widget.dart';
 import 'package:bottle_crm/ui/widgets/tags_widget.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bottle_crm/bloc/account_bloc.dart';
@@ -761,7 +761,6 @@ class _AccountDetailsState extends State<AccountDetails> {
       accountBloc.closedAccounts.clear();
       await accountBloc.fetchAccounts();
       await dashboardBloc.fetchDashboardDetails();
-      await FirebaseAnalytics.instance.logEvent(name: "Account_Deleted");
       Navigator.pushReplacementNamed(context, '/accounts_list');
     } else if (result['error'] == true) {
       showToaster(result['message'], context);

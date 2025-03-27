@@ -11,7 +11,6 @@ import 'package:bottle_crm/utils/utils.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 import 'package:multiselect_formfield/multiselect_formfield.dart';
-import 'package:random_color/random_color.dart';
 
 class LeadsList extends StatefulWidget {
   LeadsList();
@@ -342,10 +341,7 @@ class _LeadsListState extends State<LeadsList> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            onPrimary: Theme.of(context).primaryColor,
-                          ),
+                          style: ElevatedButton.styleFrom(),
                           onPressed: () {
                             setState(() {
                               _isFilter = false;
@@ -368,10 +364,7 @@ class _LeadsListState extends State<LeadsList> {
                           )),
                       SizedBox(width: 20.0),
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).primaryColor,
-                            onPrimary: Colors.white,
-                          ),
+                          style: ElevatedButton.styleFrom(),
                           onPressed: () {
                             FocusScope.of(context).unfocus();
                             _submitForm();
@@ -463,9 +456,6 @@ class _LeadsListState extends State<LeadsList> {
                                                 padding: EdgeInsets.symmetric(
                                                     horizontal: 5.0,
                                                     vertical: 3.0),
-                                                color: randomColor.randomColor(
-                                                    colorBrightness:
-                                                        ColorBrightness.light),
                                                 child: Text(
                                                   _openLeads[index].status == ""
                                                       ? ""
@@ -588,9 +578,6 @@ class _LeadsListState extends State<LeadsList> {
                                                 padding: EdgeInsets.symmetric(
                                                     horizontal: 5.0,
                                                     vertical: 3.0),
-                                                color: randomColor.randomColor(
-                                                    colorBrightness:
-                                                        ColorBrightness.light),
                                                 child: Text(
                                                   _closedLeads[index].status ==
                                                           ""

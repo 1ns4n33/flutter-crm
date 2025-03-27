@@ -1,6 +1,6 @@
 import 'package:bottle_crm/responsive.dart';
 import 'package:bottle_crm/utils/validations.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
@@ -48,7 +48,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         _errorMessage = '';
       });
       await authBloc.fetchCompanies();
-      await FirebaseAnalytics.instance.logEvent(name: "Forget Password");
       Navigator.pushNamedAndRemoveUntil(
           context, '/dashboard', (route) => false);
     } else if (result['error'] == true) {
@@ -179,7 +178,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                           filled: true,
                                           hintStyle: TextStyle(fontSize: 14.0)),
                                       keyboardType: TextInputType.emailAddress,
-                                      validator: (value) =>FieldValidators.emailFieldValidation(value!),
+                                      validator: (value) =>
+                                          FieldValidators.emailFieldValidation(
+                                              value!),
                                       onSaved: (value) {
                                         _email = value;
                                       },
@@ -386,9 +387,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(73, 128, 255, 1.0)
-          ),
+          decoration: BoxDecoration(color: Color.fromRGBO(73, 128, 255, 1.0)),
           child: forgotPasswordWidget()),
     );
   }

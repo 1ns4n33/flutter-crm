@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:bottle_crm/utils/utils.dart';
-import 'package:random_color/random_color.dart';
 
 class TagViewWidget extends StatelessWidget {
   final List tags;
@@ -18,7 +16,6 @@ class TagViewWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: 5.0),
       padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 3.0),
-      color: randomColor.randomColor(colorBrightness: ColorBrightness.light),
       child: Text(
         tags[tagIndex]['name'],
         style: TextStyle(color: Colors.white, fontSize: 12.0),

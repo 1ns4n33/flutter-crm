@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:bottle_crm/ui/widgets/bottom_navigation_bar.dart';
 import 'package:bottle_crm/utils/utils.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:random_color/random_color.dart';
 
 class CasesList extends StatefulWidget {
   CasesList();
@@ -278,10 +277,7 @@ class _CasesListState extends State<CasesList> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            onPrimary: Theme.of(context).primaryColor,
-                          ),
+                          style: ElevatedButton.styleFrom(),
                           onPressed: () {
                             setState(() {
                               _isFilter = false;
@@ -303,10 +299,7 @@ class _CasesListState extends State<CasesList> {
                           )),
                       SizedBox(width: 20.0),
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).primaryColor,
-                            onPrimary: Colors.white,
-                          ),
+                          style: ElevatedButton.styleFrom(),
                           onPressed: () {
                             FocusScope.of(context).unfocus();
                             _submitForm();
@@ -425,9 +418,6 @@ class _CasesListState extends State<CasesList> {
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 5.0, vertical: 3.0),
-                                        color: randomColor.randomColor(
-                                            colorBrightness:
-                                                ColorBrightness.light),
                                         child: Text(
                                           _cases[index].status!,
                                           style: TextStyle(

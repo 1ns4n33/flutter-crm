@@ -278,10 +278,7 @@ class _TeamsListState extends State<TeamsList> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
-                            onPrimary: Theme.of(context).primaryColor,
-                          ),
+                          style: ElevatedButton.styleFrom(),
                           onPressed: () {
                             setState(() {
                               _isFilter = false;
@@ -302,10 +299,7 @@ class _TeamsListState extends State<TeamsList> {
                           )),
                       SizedBox(width: 20.0),
                       ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Theme.of(context).primaryColor,
-                            onPrimary: Colors.white,
-                          ),
+                          style: ElevatedButton.styleFrom(),
                           onPressed: () {
                             FocusScope.of(context).unfocus();
                             _submitForm();
